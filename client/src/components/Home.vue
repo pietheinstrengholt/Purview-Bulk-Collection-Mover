@@ -43,21 +43,14 @@ export default {
         selectCollection(name) {
             axios.post(import.meta.env.VITE_VUE_APP_HOSTNAME + "/api/collections/discover", { collectionName: name }).then(
                 response => {
-                    //this.discoverData = this.sortByKey(response.data, "entityType");
                     this.discoverData = response.data.sort(
-                            (teamA, teamB) => teamA.qualifiedName - teamB.entityType,
+                            (A, B) => A.qualifiedName - B.entityType,
                         )
                 },
                 response => {
                     console.log("oops something went wrong", response);
                 }
             );
-        },
-        sortByKey(array, key) {
-            return array.sort(function(a, b) {
-                var x = a[key]; var y = b[key];
-                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-            });
         }
     }
 };

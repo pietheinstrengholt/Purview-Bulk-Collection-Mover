@@ -31,7 +31,9 @@ export default {
             return response;
         })
         .then(response => {
-            this.collections = this.sortByKey(response.data, "friendlyName");
+            this.collections = response.data.sort(
+                            (A, B) => A.friendlyName - B.parentCollection,
+                        )
         });
     },
     methods: {
@@ -43,12 +45,6 @@ export default {
             if (result) {
                 return result.friendlyName;    
             }
-        },
-        sortByKey(array, key) {
-            return array.sort(function(a, b) {
-                var x = a[key]; var y = b[key];
-                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-            });
         }
     }
 };
