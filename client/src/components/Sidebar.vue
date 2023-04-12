@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul class="list-group" v-for="(collection, index) in collections" v-bind:key="index">
+        <ul class="list-group" v-for="(collection, index) in this.store.collections" v-bind:key="index">
             <li class="list-group-item" v-on:click="selectCollection(collection.name)" v-bind:id="collection.name" v-bind:class="{'selected': store.currentSelection.collection == collection.name}">
                 <div v-if="collection.parentCollection">
                     {{ lookupCollectionName(collection.parentCollection.referenceName) }} - 
@@ -31,7 +31,7 @@ export default {
             return response;
         })
         .then(response => {
-            this.collections = response.data.sort(
+            this.store.collections = response.data.sort(
                             (A, B) => A.friendlyName - B.parentCollection,
                         )
         });
@@ -41,7 +41,7 @@ export default {
             this.store.currentSelection.collection = name;
         },
         lookupCollectionName(name) {
-            var result = this.collections.find(o => o.name === 'purviewphs');
+            var result = this.store.collections.find(o => o.name === 'purviewphs');
             if (result) {
                 return result.friendlyName;    
             }
