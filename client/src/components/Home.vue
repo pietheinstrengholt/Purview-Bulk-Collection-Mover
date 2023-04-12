@@ -23,11 +23,11 @@
             <div class="input-group">
                 <select class="form-select" aria-label="Default select example" v-model="selected">
                     <option disabled selected>Select collection</option>
-                    <option v-for="(collection, index) in this.store.collections" :value="collection.name" v-bind:key="index" :disabled="collection.name === store.currentSelection.collection? true : false">
+                    <option v-for="(collection, index) in this.store.collections" :value="collection.name" v-bind:key="index" :disabled="collection.name === this.store.currentSelection.collection">
                         {{ collection.friendlyName }}
                     </option>
                 </select>
-                <button @click="submitData(selected, this.guidContainerFiltered)" type="button" class="btn btn-primary" :disabled="guidContainer == ''">Move</button>
+                <button @click="submitData(selected, this.guidContainerFiltered)" type="button" class="btn btn-primary" :disabled="guidContainerFiltered == '' | selected == ''">Move</button>
             </div>
         </template>
         </vue-good-table>
@@ -97,12 +97,11 @@ export default {
             );
         },
         submitData(selected, guidList) {
-            console.log("clicked");
             axios.post(import.meta.env.VITE_VUE_APP_HOSTNAME + "/api/entities/move", { collectionName: selected, guidList: guidList }).then(
                 response => {
-                    //todo refresh window
-                    console.log(selected);
-                    console.log(guidList);
+                    //update current selection and selection window with submitted collection
+                    this.store.currentSelection.collection = selected;
+                    this.selectCollection(selected);
                 },
                 response => {
                     console.log("oops something went wrong", response);
@@ -111,7 +110,6 @@ export default {
 
         },
         selectionChanged(params) {
-                console.log("selected");
                 this.rowSelection = params.selectedRows;
         },
     },
