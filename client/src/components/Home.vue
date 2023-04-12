@@ -1,9 +1,5 @@
 <template> 
  <div v-if="rows">
-    <div>
-        {{ guidContainer }}
-        {{ selected }}
-    </div>
     <br>
     <div id="table">
         <vue-good-table
@@ -27,11 +23,11 @@
             <div class="input-group">
                 <select class="form-select" aria-label="Default select example" v-model="selected">
                     <option disabled selected>Select collection</option>
-                    <option v-for="(collection, index) in this.store.collections" :value="collection.name" v-bind:key="index">
+                    <option v-for="(collection, index) in this.store.collections" :value="collection.name" v-bind:key="index" :disabled="collection.name === store.currentSelection.collection? true : false">
                         {{ collection.friendlyName }}
                     </option>
                 </select>
-                <button @click="submitData()" type="button" class="btn btn-primary" :disabled="guidContainer == ''">Move</button>
+                <button @click="submitData(selected, this.guidContainerFiltered)" type="button" class="btn btn-primary" :disabled="guidContainer == ''">Move</button>
             </div>
         </template>
         </vue-good-table>
@@ -43,7 +39,7 @@
 import axios from 'axios';
 import store from "../store";
 import { VueGoodTable } from 'vue-good-table-next';
-import './../../node_modules/vue-good-table-next/dist/vue-good-table-next.css';
+import './../assets/vue-good-table/vue-good-table-next.css';
 
 export default {
     components: {
@@ -100,8 +96,18 @@ export default {
                 }
             );
         },
-        submitData() {
+        submitData(selected, guidList) {
             console.log("clicked");
+            axios.post(import.meta.env.VITE_VUE_APP_HOSTNAME + "/api/entities/move", { collectionName: selected, guidList: guidList }).then(
+                response => {
+                    //todo refresh window
+                    console.log(selected);
+                    console.log(guidList);
+                },
+                response => {
+                    console.log("oops something went wrong", response);
+                }
+            );
 
         },
         selectionChanged(params) {
@@ -110,7 +116,7 @@ export default {
         },
     },
     computed: {
-        guidContainer() {
+        guidContainerFiltered() {
             var guidList = new Array();
             this.rowSelection.forEach(function(entity) {
                 guidList.push(entity.id);
@@ -129,8 +135,8 @@ table {
     width: 100%;
 }
 th, td {
-  border: 1px solid;
-  word-wrap: break-word;
+    border: 1px solid;
+    word-wrap: break-word;
 }
 
 th.vgt-checkbox-col {
@@ -139,5 +145,9 @@ th.vgt-checkbox-col {
 
 div.input-group {
     right: 5px;
+}
+
+tr button {
+    visibility: hidden;
 }
 </style>

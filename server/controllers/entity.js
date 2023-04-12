@@ -5,16 +5,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 const endpoint = process.env["ENDPOINT"];
 
-exports.getEntities = async (req, res) => {
-  console.log("== List entity typedefs sample ==");
+exports.moveEntities = async (req, res) => {
   const client = PurviewCatalog(endpoint, new DefaultAzureCredential());
-
-  const dataSources = await client.path("/atlas/v2/types/typedefs").get();
-
-  if (dataSources.status !== "200") {
-    console.log(`GET "/atlas/v2/types/typedefs" failed with ${dataSources.status}`);
-    throw res.status(500).json(dataSources);
-  }
-
-  return res.status(200).json(dataSources.body.entityDefs?.map((ds) => ds.name).join("\n"));
+  const dataSources = await client.path("/collections/" + req.body.collectionName + "/entity/moveHere?api-version=2022-08-01-preview").post({body: 
+      {
+          "entityGuids": req.body.guidList
+      }
+  });
+  return res.status(200).json(dataSources.body.value);
 }
