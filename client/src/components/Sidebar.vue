@@ -1,7 +1,9 @@
 <template>
     <div>
-        <ul class="list-group" v-for="(collection, index) in this.store.collections" v-bind:key="index">
-            <li class="list-group-item" v-on:click="selectCollection(collection.name)" v-bind:id="collection.name" v-bind:class="{'selected': store.currentSelection.collection == collection.name}">
+        <br>
+        <h3>Collections:</h3>
+        <ul class="list-group">
+            <li v-for="(collection, index) in this.store.collections" v-bind:key="index" class="list-group-item" v-on:click="selectCollection(collection.name)" v-bind:id="collection.name" v-bind:class="{'active': store.currentSelection.collection == collection.name}">
                 <div v-if="collection.parentCollection">
                     {{ lookupCollectionName(collection.parentCollection.referenceName) }} - 
                 </div>
@@ -49,9 +51,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-li.selected {
-  background-color: #18bc9c;
-}
-</style>

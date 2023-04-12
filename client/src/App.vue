@@ -14,7 +14,6 @@
   </template>
 
 <script>
-  import store from "./store";
   import { defineAsyncComponent } from 'vue'
 
   const Sidebar = defineAsyncComponent(() => import(/* webpackChunkName: "sidebar" */ "./components/Sidebar.vue"));

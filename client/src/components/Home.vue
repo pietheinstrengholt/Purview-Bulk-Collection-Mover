@@ -1,7 +1,14 @@
 <template> 
  <div v-if="rows">
+    <div>
+        {{ guidContainer }}
+        {{ selected }}
+    </div>
+    <br>
     <div id="table">
         <vue-good-table
+            v-on:selected-rows-change="selectionChanged"
+            ref="my-table"
             styleClass="table"
             :columns="columns"
             :rows="rows"
@@ -18,13 +25,13 @@
         >
         <template #table-actions>
             <div class="input-group">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" v-model="selected">
                     <option disabled selected>Select collection</option>
                     <option v-for="(collection, index) in this.store.collections" :value="collection.name" v-bind:key="index">
                         {{ collection.friendlyName }}
                     </option>
                 </select>
-                <button type="button" class="btn btn-primary">Move</button>
+                <button @click="submitData()" type="button" class="btn btn-primary" :disabled="guidContainer == ''">Move</button>
             </div>
         </template>
         </vue-good-table>
@@ -44,6 +51,9 @@ export default {
     },
     data() {
         return {
+            selected: '',
+            guidContainer: [],
+            rowSelection: [],
             discoverData: '',
             store: store,
             columns: [
@@ -89,6 +99,25 @@ export default {
                     console.log("oops something went wrong", response);
                 }
             );
+        },
+        submitData() {
+            console.log("clicked");
+
+        },
+        selectionChanged(params) {
+                console.log("selected");
+                this.rowSelection = params.selectedRows;
+        },
+    },
+    computed: {
+        guidContainer() {
+            var guidList = new Array();
+            this.rowSelection.forEach(function(entity) {
+                guidList.push(entity.id);
+            });
+            // eslint-disable-next-line
+            this.guidContainer = guidList;
+            return this.guidContainer;
         }
     }
 };
