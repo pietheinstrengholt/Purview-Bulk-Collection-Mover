@@ -43,7 +43,7 @@ export default {
             this.store.currentSelection.collection = name;
         },
         lookupCollectionName(name) {
-            var result = this.store.collections.find(o => o.name === 'purviewphs');
+            var result = this.store.collections.find(o => o.name === import.meta.env.VITE_CATALOG_NAME);
             if (result) {
                 return result.friendlyName;    
             }

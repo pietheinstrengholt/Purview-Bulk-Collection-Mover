@@ -16,7 +16,7 @@ This application is designed to quickly perform bulk move operations between col
 * Run `npm install` in both the `client` and `server` folder
 * Find the `.env.example` file in the root of both the `client` and `server` folder. Copy and rename the files to `.env`
 * Edit `.env` inside the `server` folder and enter the information needed for the service principal, such as AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET and ENDPOINT. Note that the endpoint uses the style: https://<catalog>.purview.azure.com
-* Edit `.env` inside the `client` folder. Change the VITE_APP_HOSTNAME, so it points to the back-end.
+* Edit `.env` inside the `client` folder. Change the VITE_APP_HOSTNAME and VITE_CATALOG_NAME, so it points to the back-end and <catalog>.
 
 ### Development
 If you would like to run this app in development mode I recommend to run:
