@@ -34,4 +34,4 @@ I've added a script for easily moving Microsoft Fabric workspace items to Micros
 For moving workspace items to collections, you must provide two arguments:
 - Inside the server folder: `node fabricmover.js <workspaceName> <collectionName>`
 
-If the script runs successful, you should see something like: `Moved 67 entities to collection: o2ensa`
+If the script successfully runs, you should see something like: `Moved 67 entities to collection: o2ensa`
