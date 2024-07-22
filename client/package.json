@@ -20,13 +20,13 @@
   "dependencies": {
     "@azure-rest/purview-account": "^1.0.0-beta.1",
     "@azure-rest/purview-catalog": "next",
-    "@azure/identity": "^4.0.1",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "axios": "^1.6.8",
+    "@azure/identity": "^4.4.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "axios": "^1.7.2",
     "dotenv": "latest",
     "express": "^4.19.2",
-    "vite": "^5.2.6",
-    "vue": "^3.4.21",
+    "vite": "^5.3.4",
+    "vue": "^3.4.33",
     "vue-good-table-next": "^0.2.1"
   }
 }
