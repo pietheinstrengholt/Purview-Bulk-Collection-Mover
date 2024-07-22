@@ -131,6 +131,7 @@ export default {
 table {
     table-layout: fixed; 
     width: 100%;
+    margin-bottom: 0rem !important;
 }
 th, td {
     border: 1px solid;
@@ -147,5 +148,9 @@ div.input-group {
 
 tr button {
     visibility: hidden;
+}
+
+div.vgt-responsive {
+    margin-bottom: 20px;
 }
 </style>

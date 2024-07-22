@@ -1,7 +1,7 @@
 <template>
     <div>
         <br>
-        <h3>Collections:</h3>
+        <h4>Collections:</h4>
         <ul class="list-group">
             <li v-for="(collection, index) in this.store.collections" v-bind:key="index" class="list-group-item" v-on:click="selectCollection(collection.name)" v-bind:id="collection.name" v-bind:class="{'active': store.currentSelection.collection == collection.name}">
                 <div v-if="collection.parentCollection">
@@ -9,7 +9,7 @@
                 </div>
                 <div>
                     {{ collection.friendlyName }}
-                </div> 
+                </div>
             </li>
         </ul>
     </div>
@@ -34,8 +34,8 @@ export default {
         })
         .then(response => {
             this.store.collections = response.data.sort(
-                            (A, B) => A.friendlyName - B.parentCollection,
-                        )
+                (A, B) => A.friendlyName - B.parentCollection,
+            )
         });
     },
     methods: {
@@ -43,9 +43,9 @@ export default {
             this.store.currentSelection.collection = name;
         },
         lookupCollectionName(name) {
-            var result = this.store.collections.find(o => o.name === import.meta.env.VITE_CATALOG_NAME);
+            var result = this.store.collections.find(o => o.name === name);
             if (result) {
-                return result.friendlyName;    
+                return result.friendlyName;
             }
         }
     }
